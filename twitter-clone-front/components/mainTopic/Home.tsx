@@ -1,13 +1,3 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from '@mui/material';
 import React, { FC, useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GifIcon from '@mui/icons-material/Gif';
@@ -16,9 +6,83 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import RoomIcon from '@mui/icons-material/Room';
+import {
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+  Grid,
+  TextField,
+  Divider,
+  Button,
+} from '@mui/material';
+import PostedFrame, { PostedInfo } from '../common/PostedFrame';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const [selectedValue, setSelectedValue] = useState('recommendation');
+
+  const posts: PostedInfo[] = [
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+      reply: 'xxxx',
+      rePost: 'xxxx',
+      good: 'xxxx',
+      analytics: 900,
+    },
+    {
+      id: 'xxxx',
+      userName: 'テストアカウント',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'こんばんは。',
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: false,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'testetst',
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: false,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+    },
+  ];
 
   return (
     <>
@@ -37,7 +101,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       </Box>
 
       {/* 投稿フレーム */}
-      <Box>
+      <Box sx={{ py: 1 }}>
         <Grid container>
           <Grid xs={1} justifyContent="center" alignItems="center">
             <AccountCircleIcon />
@@ -56,14 +120,24 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
           </Grid>
         </Grid>
         <Divider />
-        <Box display="flex" justifyContent="space-between" sx={{ py: 1 }}>
-          <Box>
-            <InsertPhotoIcon sx={{ fontSize: 16 }} />
-            <GifIcon sx={{ fontSize: 16 }} />
-            <FormatListBulletedIcon sx={{ fontSize: 16 }} />
-            <SentimentSatisfiedAltIcon sx={{ fontSize: 16 }} />
-            <PendingActionsIcon sx={{ fontSize: 16 }} />
-            <RoomIcon sx={{ fontSize: 16 }} />
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          sx={{ pt: 1, pb: 2 }}
+        >
+          <Box
+            sx={{
+              '& svg': {
+                fontSize: 16,
+              },
+            }}
+          >
+            <InsertPhotoIcon />
+            <GifIcon />
+            <FormatListBulletedIcon />
+            <SentimentSatisfiedAltIcon />
+            <PendingActionsIcon />
+            <RoomIcon />
           </Box>
           <Button
             variant="contained"
@@ -72,6 +146,14 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
             ポストする
           </Button>
         </Box>
+      </Box>
+
+      <Divider />
+      {/* 投稿閲覧のフレーム */}
+      <Box>
+        {posts.map((post) => (
+          <PostedFrame key={post.id} postedInfo={post} />
+        ))}
       </Box>
     </>
   );
