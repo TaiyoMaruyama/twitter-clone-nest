@@ -22,27 +22,31 @@ export type PostedInfo = {
   analytics?: number;
 };
 
+const bottomActionIcons = [
+  {
+    key: 'reply',
+    Component: ChatBubbleOutlineIcon,
+    color: 'royalblue',
+  },
+  {
+    key: 'rePost',
+    Component: RepeatIcon,
+    color: 'lightseagreen',
+  },
+  {
+    key: 'good',
+    Component: FavoriteBorderIcon,
+    color: 'pink',
+  },
+  {
+    key: 'analytics',
+    Component: BarChartIcon,
+    color: 'royalblue',
+  },
+];
 const PostedFrame: FC<{ postedInfo: PostedInfo }> = ({ postedInfo }) => {
   // todo: postedInfoのidとuserのテーブルがいいねのテーブルにあるかどうかをチェックする
 
-  const bottomActionIcons = [
-    {
-      key: 'ChatBubbleOutlineIcon',
-      Component: ChatBubbleOutlineIcon,
-    },
-    {
-      key: 'repeatIcon',
-      Component: RepeatIcon,
-    },
-    {
-      key: 'favoriteBorderIcon',
-      Component: FavoriteBorderIcon,
-    },
-    {
-      key: 'barChartIcon',
-      Component: BarChartIcon,
-    },
-  ];
   return (
     <Box sx={{ py: 1 }}>
       <Grid container>
@@ -70,12 +74,14 @@ const PostedFrame: FC<{ postedInfo: PostedInfo }> = ({ postedInfo }) => {
         width="100%"
         sx={{ '& svg': { fontSize: 14 } }}
       >
-        {bottomActionIcons.map(({ key, Component }) => (
+        {bottomActionIcons.map(({ key, Component, color }) => (
           <Box key={key} display="flex" alignItems="center">
             <IconButton>
-              <Component />
+              <Component sx={{ color: postedInfo[key] && color }} />
             </IconButton>
-            <Typography sx={{ fontSize: 12 }}>34</Typography>
+            <Typography sx={{ fontSize: 12, color: postedInfo[key] && color }}>
+              {postedInfo[key]}
+            </Typography>
           </Box>
         ))}
       </Box>

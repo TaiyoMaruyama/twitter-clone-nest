@@ -41,6 +41,9 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       userId: '@test-test',
       postedDuration: '8時間前',
       text: 'こんばんは。',
+      reply: 'xxxx',
+      rePost: 'xxxx',
+      analytics: 900,
     },
     {
       id: 'xxxx',
@@ -49,6 +52,25 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       userId: '@test-test',
       postedDuration: '8時間前',
       text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+      analytics: 900,
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: false,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+      analytics: 900,
+    },
+    {
+      id: 'xxxx',
+      userName: 'testAccount',
+      officialBudge: true,
+      userId: '@test-test',
+      postedDuration: '8時間前',
+      text: 'test',
+      analytics: 900,
     },
     {
       id: 'xxxx',
@@ -57,22 +79,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       userId: '@test-test',
       postedDuration: '8時間前',
       text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'testetst',
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: false,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+      analytics: 900,
     },
     {
       id: 'xxxx',
@@ -81,6 +88,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       userId: '@test-test',
       postedDuration: '8時間前',
       text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
+      analytics: 900,
     },
   ];
 
@@ -110,8 +118,10 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
             <TextField
               fullWidth
               placeholder="いまどうしてる？"
+              multiline
               size="small"
               sx={{
+                overflow: 'auto',
                 '& fieldset': {
                   border: 'none',
                 },
