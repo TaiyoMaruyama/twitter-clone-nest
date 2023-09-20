@@ -15,8 +15,9 @@ import {
   TextField,
   Divider,
   Button,
+  Container,
 } from '@mui/material';
-import PostedFrame, { PostedInfo } from '../common/PostedFrame';
+import PostedFrame, { PostedInfo } from './common/PostedFrame';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const [selectedValue, setSelectedValue] = useState('recommendation');
@@ -93,7 +94,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   ];
 
   return (
-    <>
+    <Container>
       <Box>
         <Typography sx={{ fontWeight: 'bold' }}>{headerTitle}</Typography>
       </Box>
@@ -151,7 +152,12 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
           </Box>
           <Button
             variant="contained"
-            sx={{ fontSize: 8, p: '3px 8px', borderRadius: 4 }}
+            sx={{
+              fontSize: 12,
+              p: '3px 8px',
+              borderRadius: 4,
+              fontWeight: 'bold',
+            }}
           >
             ポストする
           </Button>
@@ -165,6 +171,6 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
           <PostedFrame key={post.id} postedInfo={post} />
         ))}
       </Box>
-    </>
+    </Container>
   );
 };

@@ -2,7 +2,8 @@ import { Box, Button, Container, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { IconsDef, buttonTitle } from '../../pages/consts';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Home } from '../mainTopic/Home';
+import RightSideBar from '../RightSideBar';
+import { Home } from '../Home';
 
 export const Layout = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(IconsDef[0].key);
@@ -35,7 +36,9 @@ export const Layout = () => {
         </Grid>
 
         {/* 右のサイドバー（おすすめや検索） */}
-        <Grid xs={3}>kokokokokok</Grid>
+        <Grid xs={3}>
+          <RightSideBar />
+        </Grid>
       </Grid>
     </Box>
   );
