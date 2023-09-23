@@ -30,7 +30,6 @@ export const Layout = () => {
           </Container>
         </Grid>
 
-        {/* メイントピック */}
         <Grid xs={6}>
           <Home headerTitle={buttonTitle[selectedTabKey]} />
         </Grid>
