@@ -10,7 +10,7 @@ export const Layout = () => {
   return (
     <Box maxWidth={900} sx={{ m: '0 auto' }}>
       <Grid container>
-        {/* 左のサイドバー */}
+        {/* ??????? */}
         <Grid xs={3}>
           <Container sx={{ position: 'sticky', top: 12, zIndex: '1' }}>
             <Box>
@@ -34,7 +34,7 @@ export const Layout = () => {
           <Home headerTitle={buttonTitle[selectedTabKey]} />
         </Grid>
 
-        {/* 右のサイドバー（おすすめや検索） */}
+        {/* ???????????????? */}
         <Grid xs={3}>
           <RightSideBar />
         </Grid>
