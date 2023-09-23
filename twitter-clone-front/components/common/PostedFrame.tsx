@@ -7,7 +7,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
-export type PostedInfo = {
+export type Post = {
   id: string;
   userName: string;
   officialBudge: boolean;
@@ -44,7 +44,7 @@ const bottomActionIcons = [
     color: 'royalblue',
   },
 ];
-const PostedFrame: FC<{ postedInfo: PostedInfo }> = ({ postedInfo }) => {
+const PostedFrame: FC<{ postedInfo: Post }> = ({ postedInfo }) => {
   // todo: postedInfoのidとuserのテーブルがいいねのテーブルにあるかどうかをチェックする
 
   return (
