@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GifIcon from '@mui/icons-material/Gif';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -18,9 +18,11 @@ import {
   Container,
 } from '@mui/material';
 import PostedFrame, { Post } from './common/PostedFrame';
+import axios from 'axios';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const [selectedValue, setSelectedValue] = useState('recommendation');
+  const [allPost, setAllPost] = useState<Post[]>([]);
 
   const posts: Post[] = [
     {
@@ -93,6 +95,17 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
     },
   ];
 
+  const getAllPost = async () => {
+    const { data }: { data: Post[] } = await axios.get(
+      'http://localhost:3001/posts',
+    );
+    setAllPost(data);
+  };
+
+  useEffect(() => {
+    getAllPost();
+  }, []);
+
   return (
     <Container>
       <Box>
@@ -158,6 +171,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
               borderRadius: 4,
               fontWeight: 'bold',
             }}
+            onClick={getAllPost}
           >
             ポストする
           </Button>
@@ -167,7 +181,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       <Divider />
       {/* 投稿閲覧のフレーム */}
       <Box>
-        {posts.map((post) => (
+        {allPost.map((post) => (
           <PostedFrame key={post.id} postedInfo={post} />
         ))}
       </Box>
