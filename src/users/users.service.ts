@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './types';
+import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
-  private users = [];
+  private users = [
+    {
+      id: 'xxxx',
+      email: 'test@gmail.com',
+      password: 'password',
+    },
+  ];
 
   getAllUser(): User[] {
     return this.users;

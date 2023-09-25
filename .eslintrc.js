@@ -30,4 +30,11 @@ module.exports = {
     quotes: ['error', 'single'], // シングルクォートを使用
     semi: ['error', 'always'], // セミコロンを常に付ける
   },
+  'prettier/prettier': [
+    'error',
+    {
+      singleQuote: true,
+      parser: 'flow',
+    },
+  ],
 };

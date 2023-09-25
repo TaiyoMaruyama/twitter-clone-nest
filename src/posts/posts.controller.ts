@@ -26,7 +26,7 @@ export class PostsController {
     const id = uuid4;
     const post = {
       ...id,
-      postDto,
+      ...postDto,
     };
     return this.postsService.createPost(post);
   }
