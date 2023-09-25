@@ -9,7 +9,7 @@ export class PostsService {
       id: uuid4,
       userName: 'Testさん',
       officialBudge: true,
-      userId: uuid4,
+      userId: '@not-gmail',
       postedDuration: 'string',
       text: 'これは初めから入っている投稿です。',
       reply: uuid4,
