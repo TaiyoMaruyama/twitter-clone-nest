@@ -17,12 +17,12 @@ import {
   Button,
   Container,
 } from '@mui/material';
-import PostedFrame, { PostedInfo } from './common/PostedFrame';
+import PostedFrame, { Post } from './common/PostedFrame';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const [selectedValue, setSelectedValue] = useState('recommendation');
 
-  const posts: PostedInfo[] = [
+  const posts: Post[] = [
     {
       id: 'xxxx',
       userName: 'testAccount',
