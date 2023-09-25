@@ -1,9 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './types';
+import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class PostsService {
-  private posts = [];
+  private posts: Post[] = [
+    {
+      id: uuid4,
+      userName: 'Testさん',
+      officialBudge: true,
+      userId: '@not-gmail',
+      postedDuration: 'string',
+      text: 'これは初めから入っている投稿です。',
+      reply: uuid4,
+      rePost: uuid4,
+      good: uuid4,
+      analytics: 123,
+    },
+  ];
 
   getAllPost(): Post[] {
     return this.posts;
