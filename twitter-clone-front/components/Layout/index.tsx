@@ -10,7 +10,6 @@ export const Layout = () => {
   return (
     <Box maxWidth={900} sx={{ m: '0 auto' }}>
       <Grid container>
-        {/* ??????? */}
         <Grid xs={3}>
           <Container sx={{ position: 'sticky', top: 12, zIndex: '1' }}>
             <Box>
