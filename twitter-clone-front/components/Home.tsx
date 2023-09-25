@@ -1,4 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
+
+const testUserName = 'jon';
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GifIcon from '@mui/icons-material/Gif';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -21,80 +24,13 @@ import PostedFrame, { Post } from './common/PostedFrame';
 import axios from 'axios';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
-  const [selectedValue, setSelectedValue] = useState('recommendation');
+  const [selectedValue, setSelectedValue] = useState<
+    'recommendation' | 'following'
+  >('recommendation');
   const [allPost, setAllPost] = useState<Post[]>([]);
+  const [inputText, setInputText] = useState<string>('');
 
-  const posts: Post[] = [
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-      reply: 'xxxx',
-      rePost: 'xxxx',
-      good: 'xxxx',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'テストアカウント',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'こんばんは。',
-      reply: 'xxxx',
-      rePost: 'xxxx',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: false,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'test',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: false,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-      analytics: 900,
-    },
-    {
-      id: 'xxxx',
-      userName: 'testAccount',
-      officialBudge: true,
-      userId: '@test-test',
-      postedDuration: '8時間前',
-      text: 'テストのための投稿です。テストのための投稿です。テストのための投稿です。',
-      analytics: 900,
-    },
-  ];
-
+  // 投稿を取得する
   const getAllPost = async () => {
     const { data }: { data: Post[] } = await axios.get(
       'http://localhost:3001/posts',
@@ -105,6 +41,26 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   useEffect(() => {
     getAllPost();
   }, []);
+
+  const createPost = async () => {
+    try {
+      await axios.post('http://localhost:3001/posts', {
+        userName: testUserName,
+        officialBudge: false,
+        userId: '@testTest',
+        postedDuration: 'string',
+        text: inputText,
+        reply: 'aaaa',
+        rePost: 'bbbb',
+        good: 'cccc',
+        analytics: 500,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getAllPost();
+    }
+  };
 
   return (
     <Container>
@@ -134,11 +90,19 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
               placeholder="いまどうしてる？"
               multiline
               size="small"
+              value={inputText}
               sx={{
                 overflow: 'auto',
                 '& fieldset': {
                   border: 'none',
                 },
+              }}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                  createPost();
+                  setInputText('');
+                }
               }}
             ></TextField>
           </Grid>
@@ -171,7 +135,10 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
               borderRadius: 4,
               fontWeight: 'bold',
             }}
-            onClick={getAllPost}
+            onClick={() => {
+              createPost();
+              setInputText('');
+            }}
           >
             ポストする
           </Button>

@@ -6,7 +6,7 @@ import { v4 as uuid4 } from 'uuid';
 export class UsersService {
   private users = [
     {
-      id: uuid4,
+      id: 'xxxx',
       email: 'test@gmail.com',
       password: 'password',
     },
