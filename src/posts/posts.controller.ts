@@ -3,7 +3,10 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -18,7 +21,17 @@ export class PostsController {
 
   @Get()
   getAllPost() {
-    return this.postsService.getAllPost();
+    try {
+      return this.postsService.getAllPost();
+    } catch (error) {
+      throw new HttpException(
+        {
+          error: 'have error',
+          status: HttpStatus.FORBIDDEN,
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
   @Post()
@@ -32,7 +45,7 @@ export class PostsController {
   }
 
   @Patch(':id')
-  updatePost(@Param('id') id: string, @Body() postDto: PostDto) {
+  updatePost(@Param('id', ParseUUIDPipe) id: string, @Body() postDto: PostDto) {
     const updatedPost = {
       id,
       ...postDto,
@@ -41,7 +54,7 @@ export class PostsController {
   }
 
   @Delete(':id')
-  deletePost(@Param('id') id: string) {
+  deletePost(@Param('id', ParseUUIDPipe) id: string) {
     return this.postsService.deletePost(id);
   }
 }
