@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id String @id @unique
+  email String @unique
+  password String
+  psots Post[]
+  good Good[]
+}
+
+model Post {
+  id String @id @unique
+  postedAt DateTime @default(now())
+  text String
+  reply String?
+  rePost String?
+  analytics Int @default(0)
+  user User @relation(fields: [userId], references: [id]) 
+  userId String
+  good Good[]
+}
+
+model Good {
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique
+  post Post @relation(fields: [postId], references: [id])
+  postId String @unique
+}
