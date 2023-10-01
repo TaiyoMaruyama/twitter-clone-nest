@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/users.dto';
 
@@ -7,13 +16,23 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  getAllUser() {
-    return this.usersService.getAllUser();
+  getUser(@Body('email') email: string) {
+    try {
+      return this.usersService.getUser(email);
+    } catch (error) {
+      throw new HttpException(
+        {
+          error: 'have error',
+          status: HttpStatus.FORBIDDEN,
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
   @Post()
-  postUser(@Body() userDto: UserDto) {
-    return this.usersService.postUser(userDto);
+  createUser(@Body() userDto: UserDto) {
+    return this.usersService.createUser(userDto);
   }
 
   @Delete(':id')
