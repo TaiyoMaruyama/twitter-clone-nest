@@ -1,32 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './types';
+import { User } from './types/types';
 import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
-  private users = [
+  private users: User[] = [
     {
       id: uuid4(),
+      name: 'testName1',
       email: 'test@gmail.com',
       password: 'password',
     },
     {
       id: uuid4(),
+      name: 'testName2',
       email: 'test-test@gmail.com',
       password: 'password',
     },
     {
       id: uuid4(),
+      name: 'testName3',
       email: 'test-for-test@gmail.com',
       password: 'password',
     },
   ];
 
-  getAllUser(): User[] {
-    return this.users;
+  /**
+   * emailを入力して該当するuserがあればそのidを返却する
+   * @param email string
+   * @returns
+   */
+  getUser(email: string): string {
+    const responseUserId = this.users.find((user) => user.email === email).id;
+    return responseUserId;
   }
 
-  postUser(user: User) {
+  createUser(user: User) {
     return this.users.push(user);
   }
 

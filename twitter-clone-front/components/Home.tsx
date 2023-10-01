@@ -21,7 +21,6 @@ import {
   Container,
 } from '@mui/material';
 import PostedFrame, { Post } from './common/PostedFrame';
-import axios from 'axios';
 
 export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   const [selectedValue, setSelectedValue] = useState<
@@ -29,38 +28,6 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
   >('recommendation');
   const [allPost, setAllPost] = useState<Post[]>([]);
   const [inputText, setInputText] = useState<string>('');
-
-  // 投稿を取得する
-  const getAllPost = async () => {
-    const { data }: { data: Post[] } = await axios.get(
-      'http://localhost:3001/posts',
-    );
-    setAllPost(data);
-  };
-
-  useEffect(() => {
-    getAllPost();
-  }, []);
-
-  const createPost = async () => {
-    try {
-      await axios.post('http://localhost:3001/posts', {
-        userName: testUserName,
-        officialBudge: false,
-        userId: '@testTest',
-        postedDuration: 'string',
-        text: inputText,
-        reply: 'aaaa',
-        rePost: 'bbbb',
-        good: 'cccc',
-        analytics: 500,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      getAllPost();
-    }
-  };
 
   return (
     <Container>
@@ -100,7 +67,6 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={(e) => {
                 if (e.ctrlKey && e.key === 'Enter') {
-                  createPost();
                   setInputText('');
                 }
               }}
@@ -136,7 +102,6 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
               fontWeight: 'bold',
             }}
             onClick={() => {
-              createPost();
               setInputText('');
             }}
           >
@@ -149,7 +114,7 @@ export const Home: FC<{ headerTitle: string }> = ({ headerTitle }) => {
       {/* 投稿閲覧のフレーム */}
       <Box>
         {allPost.map((post) => (
-          <PostedFrame key={post.id} postedInfo={post} />
+          <PostedFrame postedInfo={post} />
         ))}
       </Box>
     </Container>
