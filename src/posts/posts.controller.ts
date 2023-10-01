@@ -20,9 +20,12 @@ export class PostsController {
   constructor(private postsService: PostsService) {}
 
   @Get()
-  getAllPost() {
+  fixedNumberPost(
+    @Body('readStartIndex') readStartIndex: number,
+    @Body('readStartIndex') readLength: number,
+  ) {
     try {
-      return this.postsService.getAllPost();
+      return this.postsService.fixedNumberPost(readStartIndex, readLength);
     } catch (error) {
       throw new HttpException(
         {
@@ -42,15 +45,6 @@ export class PostsController {
       ...postDto,
     };
     return this.postsService.createPost(post);
-  }
-
-  @Patch(':id')
-  updatePost(@Param('id', ParseUUIDPipe) id: string, @Body() postDto: PostDto) {
-    const updatedPost = {
-      id,
-      ...postDto,
-    };
-    this.postsService.updatePost(id, updatedPost);
   }
 
   @Delete(':id')
