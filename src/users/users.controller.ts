@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { UserDto } from './dto/users.dto';
 
 @Controller('users')
 export class UsersController {
-  // eslint-disable-next-line no-unused-vars
   constructor(private usersService: UsersService) {}
 
   @Get()
@@ -12,17 +12,8 @@ export class UsersController {
   }
 
   @Post()
-  postUser(
-    @Body('id') id: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ) {
-    const a = {
-      id,
-      email,
-      password,
-    };
-    return this.usersService.postUser(a);
+  postUser(@Body() userDto: UserDto) {
+    return this.usersService.postUser(userDto);
   }
 
   @Delete(':id')

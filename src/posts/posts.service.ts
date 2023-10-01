@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from './types';
+import { Post } from './types/types';
 import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
@@ -10,9 +10,6 @@ export class PostsService {
       userId: uuid4(),
       postedAt: new Date('2021-12-24'),
       text: 'これは初めから入っている投稿です。',
-      reply: uuid4(),
-      rePost: uuid4(),
-      good: uuid4(),
       analytics: 123,
     },
   ];
