@@ -11,7 +11,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { PostDto } from './post.dto';
+import { PostDto } from './dto/post.dto';
 import { v4 as uuid4 } from 'uuid';
 
 @Controller('posts')
