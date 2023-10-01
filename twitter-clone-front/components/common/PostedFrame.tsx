@@ -8,45 +8,16 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 export type Post = {
-  id: string;
   userName: string;
   officialBudge: boolean;
-  userId: string;
-  // todo: APIのレスポンス次第で変更
-  postedDuration: string;
+  postedAt: Date;
   text: string;
-  // bottomActionの有無はそれぞれのテーブルからidがら返却されたかどうかで判断
-  reply?: string;
-  rePost?: string;
-  good?: string;
-  analytics?: number;
+  favorite: boolean;
+  favoriteCount: number;
+  analytics: number;
 };
 
-const bottomActionIcons = [
-  {
-    key: 'reply',
-    Component: ChatBubbleOutlineIcon,
-    color: 'royalblue',
-  },
-  {
-    key: 'rePost',
-    Component: RepeatIcon,
-    color: 'lightseagreen',
-  },
-  {
-    key: 'good',
-    Component: FavoriteBorderIcon,
-    color: 'pink',
-  },
-  {
-    key: 'analytics',
-    Component: BarChartIcon,
-    color: 'royalblue',
-  },
-];
 const PostedFrame: FC<{ postedInfo: Post }> = ({ postedInfo }) => {
-  // todo: postedInfoのidとuserのテーブルがいいねのテーブルにあるかどうかをチェックする
-
   return (
     <Box sx={{ py: 1 }}>
       <Grid container>
@@ -61,9 +32,6 @@ const PostedFrame: FC<{ postedInfo: Post }> = ({ postedInfo }) => {
             {postedInfo.officialBudge ? (
               <VerifiedIcon sx={{ fontSize: 18, color: 'lightblue' }} />
             ) : null}
-            <Typography sx={{ fontSize: 12, color: 'grey' }}>
-              {postedInfo.userId}
-            </Typography>
           </Box>
           <Typography>{postedInfo.text}</Typography>
         </Grid>
@@ -74,16 +42,26 @@ const PostedFrame: FC<{ postedInfo: Post }> = ({ postedInfo }) => {
         width="100%"
         sx={{ '& svg': { fontSize: 14 } }}
       >
-        {bottomActionIcons.map(({ key, Component, color }) => (
-          <Box key={key} display="flex" alignItems="center">
-            <IconButton>
-              <Component sx={{ color: postedInfo[key] && color }} />
-            </IconButton>
-            <Typography sx={{ fontSize: 12, color: postedInfo[key] && color }}>
-              {postedInfo[key]}
-            </Typography>
+        <Box display="flex" width="100%" justifyContent="space-between">
+          <Box display="flex" alignItems="center">
+            <ChatBubbleOutlineIcon />
+            <Typography>dummy</Typography>
           </Box>
-        ))}
+          <Box display="flex" alignItems="center">
+            <RepeatIcon />
+            <Typography>dummy</Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <IconButton>
+              <FavoriteBorderIcon />
+            </IconButton>
+            <Typography>123</Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <BarChartIcon />
+            <Typography>dummy</Typography>
+          </Box>
+        </Box>
       </Box>
       <Divider />
     </Box>

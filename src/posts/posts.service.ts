@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from './types';
+import { Post } from './types/types';
 import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
@@ -10,25 +10,34 @@ export class PostsService {
       userId: uuid4(),
       postedAt: new Date('2021-12-24'),
       text: 'これは初めから入っている投稿です。',
-      reply: uuid4(),
-      rePost: uuid4(),
-      good: uuid4(),
+      analytics: 123,
+    },
+    {
+      id: uuid4(),
+      userId: uuid4(),
+      postedAt: new Date('2021-12-24'),
+      text: '初めからの投稿です。雨が降ってきました。',
       analytics: 123,
     },
   ];
 
-  getAllPost(): Post[] {
-    return this.posts;
+  /**
+   * 一定数の投稿を取得する
+   * 投稿取得数・何番目を取得するかはフロント側で指示してパラメータで渡す
+   * @param readStartIndex number
+   * @param readLength number
+   * @returns
+   */
+  fixedNumberPost(readStartIndex: number, readLength: number): Post[] {
+    const readPosts = this.posts.slice(
+      readStartIndex,
+      readStartIndex + readLength,
+    );
+    return readPosts;
   }
 
   createPost(post: Post): Post[] {
     this.posts.push(post);
-    return this.posts;
-  }
-
-  updatePost(id: string, newPost: Post): Post[] {
-    const index = this.posts.findIndex((post) => post.id === id);
-    this.posts.splice(index, 1, newPost);
     return this.posts;
   }
 
