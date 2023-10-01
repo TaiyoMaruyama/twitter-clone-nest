@@ -4,7 +4,7 @@ import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
-  private users = [
+  private users: User[] = [
     {
       id: uuid4(),
       name: 'testName1',
@@ -25,11 +25,17 @@ export class UsersService {
     },
   ];
 
-  getAllUser(): User[] {
-    return this.users;
+  /**
+   * emailを入力して該当するuserがあればそのidを返却する
+   * @param email string
+   * @returns
+   */
+  getUser(email: string): string {
+    const responseUserId = this.users.find((user) => user.email === email).id;
+    return responseUserId;
   }
 
-  postUser(user: User) {
+  createUser(user: User) {
     return this.users.push(user);
   }
 
