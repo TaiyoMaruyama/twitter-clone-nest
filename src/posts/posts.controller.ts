@@ -16,7 +16,6 @@ import { v4 as uuid4 } from 'uuid';
 
 @Controller('posts')
 export class PostsController {
-  // eslint-disable-next-line no-unused-vars
   constructor(private postsService: PostsService) {}
 
   @Get()

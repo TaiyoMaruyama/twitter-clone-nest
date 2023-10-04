@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './types/types';
 import { v4 as uuid4 } from 'uuid';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
+  constructor(private readonly prisma: PrismaClient) {}
   private posts: Post[] = [
     {
       id: uuid4(),
@@ -36,9 +38,12 @@ export class PostsService {
     return readPosts;
   }
 
-  createPost(post: Post): Post[] {
-    this.posts.push(post);
-    return this.posts;
+  async createPost(post: Post): Promise<Post> {
+    // Prismaを使用してデータベースに投稿を作成
+    const createdPost = await this.prisma.post.create({
+      data: post,
+    });
+    return createdPost;
   }
 
   deletePost(id: string): void {
