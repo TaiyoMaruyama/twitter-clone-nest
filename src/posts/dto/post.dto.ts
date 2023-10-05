@@ -1,6 +1,7 @@
 export class PostDto {
+  id: string;
   userId: string;
   text: string;
-  postedAt: Date;
+  postedAt?: Date;
   analytics: number;
 }

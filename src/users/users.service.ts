@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './types/types';
-import { v4 as uuid4 } from 'uuid';
+import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+
+  async createUser(data: User) {
+    return this.prisma.user.create({
+      data,
+    });
+  }
 }
