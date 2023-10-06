@@ -2,39 +2,38 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Post,
   Put,
+  UsePipes,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostDto } from './dto/post.dto';
+import { CustomPipe } from './pipes/custom.pipe';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  // 全ての投稿を取得する
   @Get()
   async findAll() {
     return this.postsService.findAll();
   }
 
+  // 新しい投稿をする
   @Post()
   async createPost(@Body() postDto: PostDto) {
-    try {
-      const createdPost = await this.postsService.createPost(postDto);
-      return createdPost;
-    } catch (error) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+    return await this.postsService.createPost(postDto);
   }
 
+  // 特定の投稿を取得する
   @Get(':id')
   async findPost(@Param('id') id: string) {
     return this.postsService.findPost(id);
   }
 
+  // 任意の投稿におけるテキストを編集する
   @Put(':id')
   async updatePost(@Param('id') id: string, @Body('text') text: string) {
     return this.postsService.updatePost({ id, text });
