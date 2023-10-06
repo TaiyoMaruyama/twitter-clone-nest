@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL
 );
@@ -10,8 +11,8 @@ CREATE TABLE "Post" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
     "text" TEXT NOT NULL,
-    "postedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "analytics" INTEGER NOT NULL DEFAULT 0,
+    "postedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Post_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

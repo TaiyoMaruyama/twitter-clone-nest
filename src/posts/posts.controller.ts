@@ -1,54 +1,42 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
   Param,
-  ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostDto } from './dto/post.dto';
-import { v4 as uuid4 } from 'uuid';
 
 @Controller('posts')
 export class PostsController {
-  // eslint-disable-next-line no-unused-vars
-  constructor(private postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  fixedNumberPost(
-    @Body('readStartIndex') readStartIndex: number,
-    @Body('readStartIndex') readLength: number,
-  ) {
-    try {
-      return this.postsService.fixedNumberPost(readStartIndex, readLength);
-    } catch (error) {
-      throw new HttpException(
-        {
-          error: 'have error',
-          status: HttpStatus.FORBIDDEN,
-        },
-        HttpStatus.FORBIDDEN,
-      );
-    }
+  async findAll() {
+    return this.postsService.findAll();
   }
 
   @Post()
-  createPost(@Body() postDto: PostDto) {
-    const id = uuid4;
-    const post = {
-      ...id,
-      ...postDto,
-    };
-    return this.postsService.createPost(post);
+  async createPost(@Body() postDto: PostDto) {
+    try {
+      const createdPost = await this.postsService.createPost(postDto);
+      return createdPost;
+    } catch (error) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
   }
 
-  @Delete(':id')
-  deletePost(@Param('id', ParseUUIDPipe) id: string) {
-    return this.postsService.deletePost(id);
+  @Get(':id')
+  async findPost(@Param('id') id: string) {
+    return this.postsService.findPost(id);
+  }
+
+  @Put(':id')
+  async updatePost(@Param('id') id: string, @Body('text') text: string) {
+    return this.postsService.updatePost({ id, text });
   }
 }

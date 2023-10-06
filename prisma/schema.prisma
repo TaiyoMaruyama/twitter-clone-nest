@@ -10,9 +10,10 @@ datasource db {
 
 model User {
   id String @id @unique
+  name String
   email String @unique
   password String
-  psots Post[]
+  post Post[]
   favorite Favorite[]
 }
 
@@ -21,8 +22,8 @@ model Post {
   user User @relation(fields: [userId], references: [id]) 
   userId String
   text String
-  postedAt DateTime @default(now())
   analytics Int @default(0)
+  postedAt DateTime @default(now())
   favorite Favorite[]
 }
 

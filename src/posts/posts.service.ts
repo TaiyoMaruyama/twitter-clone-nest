@@ -1,47 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from './types/types';
-import { v4 as uuid4 } from 'uuid';
+import { Post } from '@prisma/client';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class PostsService {
-  private posts: Post[] = [
-    {
-      id: uuid4(),
-      userId: uuid4(),
-      postedAt: new Date('2021-12-24'),
-      text: 'これは初めから入っている投稿です。',
-      analytics: 123,
-    },
-    {
-      id: uuid4(),
-      userId: uuid4(),
-      postedAt: new Date('2021-12-24'),
-      text: '初めからの投稿です。雨が降ってきました。',
-      analytics: 123,
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  /**
-   * 一定数の投稿を取得する
-   * 投稿取得数・何番目を取得するかはフロント側で指示してパラメータで渡す
-   * @param readStartIndex number
-   * @param readLength number
-   * @returns
-   */
-  fixedNumberPost(readStartIndex: number, readLength: number): Post[] {
-    const readPosts = this.posts.slice(
-      readStartIndex,
-      readStartIndex + readLength,
-    );
-    return readPosts;
+  async findAll() {
+    return this.prisma.post.findMany({});
   }
 
-  createPost(post: Post): Post[] {
-    this.posts.push(post);
-    return this.posts;
+  async createPost(data) {
+    try {
+      return await this.prisma.post.create({
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  deletePost(id: string): void {
-    this.posts = this.posts.filter((user) => user.id !== id);
+  async findPost(params: string) {
+    const id = params;
+    return this.prisma.post.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async updatePost(param: { id: string; text: string }) {
+    const { id, text } = param;
+    return this.prisma.post.update({
+      where: {
+        id: id,
+      },
+      data: {
+        text: text,
+      },
+    });
   }
 }
