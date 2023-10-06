@@ -6,9 +6,13 @@ import { PrismaService } from 'src/prisma.service';
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async createPost(data: Post): Promise<Post> {
+  async findAll() {
+    return this.prisma.post.findMany({});
+  }
+
+  async createPost(data) {
     try {
-      return this.prisma.post.create({
+      return await this.prisma.post.create({
         data,
       });
     } catch (error) {
@@ -18,10 +22,21 @@ export class PostsService {
 
   async findPost(params: string) {
     const id = params;
-    console.log(id);
     return this.prisma.post.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async updatePost(param: { id: string; text: string }) {
+    const { id, text } = param;
+    return this.prisma.post.update({
+      where: {
+        id: id,
+      },
+      data: {
+        text: text,
       },
     });
   }
