@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { Post } from '@prisma/client';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { PostDto } from './dto/post.dto';
 
 @Injectable()
 export class PostsService {
@@ -10,13 +10,19 @@ export class PostsService {
     return this.prisma.post.findMany({});
   }
 
-  async createPost(data) {
+  /**
+   * 新しい投稿を作成
+   * 投稿に失敗した場合はエラーメッセージをthrowする
+   * @param data
+   * @returns
+   */
+  async createPost(data: PostDto) {
     try {
       return await this.prisma.post.create({
         data,
       });
     } catch (error) {
-      console.log(error);
+      throw new HttpException('failed to create post.', HttpStatus.BAD_REQUEST);
     }
   }
 
