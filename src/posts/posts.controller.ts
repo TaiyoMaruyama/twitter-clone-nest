@@ -1,15 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Put,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostDto } from './dto/post.dto';
-import { CustomPipe } from './pipes/custom.pipe';
 
 @Controller('posts')
 export class PostsController {
